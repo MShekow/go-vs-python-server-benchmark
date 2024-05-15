@@ -1,0 +1,20 @@
+services:
+  app:
+    image: python-django-test:local
+    build: .
+    ports:
+      - "8080:8040"
+    environment:
+      WORKERS: "4"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8040/create"]
+
+  benchmarker:
+    image: blazemeter/taurus:1.16.31
+    volumes:
+      - ./taurus-tests:/bzt-configs
+    command: benchmark.yaml
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: on-failure

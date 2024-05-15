@@ -1,0 +1,29 @@
+  execution:
+    - concurrency: 400
+      hold-for: 1m
+      ramp-up: 5s
+      scenario: test-app
+      executor: gatling
+
+  scenarios:
+    test-app:
+      requests:
+        - http://app:8040/api/collections/products/records
+
+  reporting:
+    - module: final-stats
+#    - module: console
+
+#  modules:
+#    jmeter:
+#      path: ./local/jmeter
+#      properties:
+#        log_level: DEBUG
+#    console:
+#      disable: false
+
+#  settings:
+#    check-interval: 5s
+#    default-executor: jmeter
+#
+#  provisioning: local

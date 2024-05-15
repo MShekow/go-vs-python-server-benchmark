@@ -1,0 +1,23 @@
+services:
+  app:
+    image: pocketbaset-test:local
+    build: .
+    ports:
+      - "8080:8040"
+    environment:
+      GOMAXPROCS: "4"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8040/api/collections/products/records"]
+#      start_period: 15s
+#      start_interval: 1s
+#      interval: 99m
+
+
+  benchmarker:
+    image: blazemeter/taurus:1.16.31
+    volumes:
+      - ./taurus-tests:/bzt-configs
+    command: benchmark.yaml
+    depends_on:
+      - app
+    restart: on-failure

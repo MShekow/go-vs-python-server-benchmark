@@ -5,12 +5,8 @@ services:
     ports:
       - "8080:8040"
     environment:
-      GOMAXPROCS: "4"
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:8040/api/collections/products/records"]
-#      start_period: 15s
-#      start_interval: 1s
-#      interval: 99m
+      GOMAXPROCS: "1"  # set to 1 or 4 in the benchmarks
+#      GOMEMLIMIT: "200MiB"  # uncomment to set a soft-limit on memory usage for the Go GC
 
 
   benchmarker:

@@ -17,4 +17,4 @@ class Products(models.Model):
         exclude = ["password_hash"]
 
 
-User_Pydantic = pydantic_model_creator(Products, name="Products")
+ProductsModel = pydantic_model_creator(Products, name="Products")

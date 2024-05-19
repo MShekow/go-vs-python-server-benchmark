@@ -14,5 +14,6 @@ EXPOSE 8040
 # To be overridden at startup
 ENV NUITKA="0"
 ENV WORKERS="1"
+ENV POSTGRES="0"
 
 CMD ["./start-server.sh"]

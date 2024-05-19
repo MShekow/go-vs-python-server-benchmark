@@ -1,5 +1,5 @@
   execution:
-    - concurrency: 400
+    - concurrency: 200
       hold-for: 1m
       ramp-up: 5s
       scenario: test-app

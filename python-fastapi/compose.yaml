@@ -1,17 +1,33 @@
 services:
   app:
     image: python-test:local
+    init: true
     build: .
     ports:
       - "8080:8040"
     environment:
-      NUITKA: "0"
-      WORKERS: "1"
+      NUITKA: "0"  # set to 0 or 1
+      WORKERS: "1"  # set to 1 or 4
+      POSTGRES: "1"  # set to 0 or 1
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8040/create"]
       start_period: 15s
       start_interval: 1s
       interval: 99m
+#    cpus: 0.2
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16.3
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
   benchmarker:

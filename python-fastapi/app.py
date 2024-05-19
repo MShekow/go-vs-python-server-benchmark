@@ -1,11 +1,12 @@
 # pylint: disable=E0611,E0401
+import os
 from typing import List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from tortoise.contrib.fastapi import register_tortoise
 
-from models import User_Pydantic, Products
+from models import ProductsModel, Products
 
 app = FastAPI(title="Tortoise ORM FastAPI example")
 
@@ -14,9 +15,9 @@ class Status(BaseModel):
     message: str
 
 
-@app.get("/products", response_model=List[User_Pydantic])
+@app.get("/products", response_model=List[ProductsModel])
 async def get_products():
-    return await User_Pydantic.from_queryset(Products.all())
+    return await ProductsModel.from_queryset(Products.all())
 
 
 @app.get("/create", response_model=Status)
@@ -69,7 +70,8 @@ async def create_products():
 
 register_tortoise(
     app,
-    db_url="sqlite://db.sqlite3",
+    db_url="sqlite://db.sqlite3" if os.environ.get("POSTGRES") == "0"
+    else "postgres://postgres:postgres@postgres:5432/postgres",  # Note: adding "?maxsize=50" deteriorates performance!
     modules={"models": ["models"]},
     generate_schemas=True,
     add_exception_handlers=True,

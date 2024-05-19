@@ -5,8 +5,8 @@ from .models import Products, ProductsSerializer
 
 
 class ProductsView(View):
-    async def get(self, request):
-        products = [p async for p in Products.objects.all()]
+    def get(self, request):
+        products = Products.objects.all()
         serializer = ProductsSerializer(products, many=True)
         return JsonResponse(serializer.data, safe=False)
 

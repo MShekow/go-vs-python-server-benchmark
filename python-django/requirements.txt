@@ -2,4 +2,3 @@ Django==5.0.6
 djangorestframework==3.15.1
 uwsgi==2.0.25.1
 psycopg[binary,pool]==3.1.19
-uvicorn==0.29.0

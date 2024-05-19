@@ -12,5 +12,6 @@ EXPOSE 8000
 
 # To be overridden at startup
 ENV WORKERS="1"
+ENV POSTGRES="0"
 
 CMD ["./start-server.sh"]
